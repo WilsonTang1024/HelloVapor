@@ -10,9 +10,10 @@ drop.get { req in
 
 drop.get("name/:name/age/:age") { request in
     if let name = request.parameters["name"]?.string, let age = request.parameters["age"]?.string {
-        return "\(name) is \(age)!"
+        return try JSON(node: ["code": 200, "msg": "success", "object": "\(name) is \(age)"])
+    } else {
+        return try JSON(node: ["code": 200, "msg": "failure"])
     }
-    return "Error retrieving parameters."
 }
 
 drop.resource("posts", PostController())
